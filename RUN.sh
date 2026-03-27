@@ -3,12 +3,6 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VENV="$SCRIPT_DIR/.venv"
 
-# Show help without requiring setup
-if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
-    python3 -m hb_downloader --help
-    exit 0
-fi
-
 # Create venv and install dependencies on first run
 if [ ! -f "$VENV/bin/python" ]; then
     echo "Setting up virtual environment..."
