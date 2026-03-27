@@ -1,2 +1,7 @@
 .worktrees/
-.venv
+.venv/
+.vscode/
+.claude/
+.pytest_cache/
+downloads
+LOG*.txt
