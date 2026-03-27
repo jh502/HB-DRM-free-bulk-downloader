@@ -1,0 +1,5 @@
+# HB DRM-Free Downloader — links.txt
+# Replace the value on the next line with your _simpleauth_sess cookie:
+^paste_your_simpleauth_sess_cookie_here
+# Then add your Humble Bundle download URLs below, one per line:
+# https://www.humblebundle.com/downloads?key=YOUR_KEY_HERE

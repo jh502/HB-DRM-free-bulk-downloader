@@ -1,0 +1,9 @@
+requests>=2.31
+
+[dev]
+pytest>=7
+pytest-mock>=3
+requests-mock>=1.11
+
+[pretty]
+rich>=13
