@@ -1,0 +1,55 @@
+# HB DRM-Free Downloader — example config
+# Copy to config.toml and fill in your values.
+# CLI args override these settings.
+# links.txt directives also override these (processed line-by-line).
+
+[auth]
+# Your _simpleauth_sess cookie from humblebundle.com
+# See README for how to find it.
+cookie = "paste_your_cookie_here"
+
+[download]
+# Where to save files (relative to script directory, or absolute)
+directory = "downloads"
+
+# Platforms to include. Known values: windows, linux, mac, android, audio, video, ebook, others
+platforms = ["windows", "audio", "video", "ebook", "others"]
+
+# Platforms to exclude (takes precedence over platforms list)
+exclude_platforms = []
+
+# Set to true to download all platforms regardless of above lists
+all_platforms = false
+
+# Preferred formats (e.g. ["pdf", "epub"]). Empty list = download all formats.
+formats = []
+
+# strict = true: skip items that don't have your preferred format (no fallback)
+strict = false
+
+# pref_first = true: download first matching format only
+# pref_first = false: download all matching formats
+pref_first = true
+
+# method = "direct" or "bittorrent"
+method = "direct"
+
+# MD5 file integrity checking
+md5_check = true
+md5_stored_check = true
+
+[paths]
+# bundle_name = "full" uses the bundle's human name as the folder
+# bundle_name = "key" uses the purchase key (shorter, avoids path length issues)
+bundle_name = "full"
+
+# Conditional filename shortening:
+# If item title length > shorten_if_title_over, truncate filename to shorten_filename_to chars
+# Set shorten_if_title_over = 0 to disable
+shorten_if_title_over = 0
+shorten_filename_to = 0
+
+[logging]
+# timestamped = true saves logs with date/time in a logs/ subfolder (not overwritten each run)
+timestamped = false
+utc = false
