@@ -76,8 +76,67 @@ def fetch_bundle(key: str, cookie: str) -> dict:
 
 def extract_downloads(bundle_json: dict, config: Config) -> list[DownloadItem]:
     """Apply platform/format/strict/pref filters. Returns flat list of DownloadItem."""
-    # Implemented in Task 6
-    raise NotImplementedError
+    subproducts = bundle_json.get("subproducts", [])
+    if not subproducts:
+        return []
+
+    # Bundle title
+    if config.bundle_name == "key":
+        bundle_title = bundle_json.get("gamekey", "unknown")
+    else:
+        raw = bundle_json.get("product", {}).get("human_name", "unknown")
+        bundle_title = _sanitise_title(raw)
+
+    items: list[DownloadItem] = []
+
+    for product in subproducts:
+        if product.get("library_family_name") == "hidden":
+            continue
+
+        item_title = _sanitise_title(product.get("human_name", "unknown"))
+        downloads = product.get("downloads", [])
+
+        for dl in downloads:
+            platform = dl.get("platform", "")
+            if not config.all_platforms:
+                if platform not in config.platforms:
+                    continue
+                if platform in config.exclude_platforms:
+                    continue
+
+            dl_struct = dl.get("download_struct", [])
+            if isinstance(dl_struct, dict):
+                dl_struct = [dl_struct]
+            if not dl_struct:
+                continue
+
+            dl_struct = [d for d in dl_struct if d.get("url", {}).get("web")]
+            if not dl_struct:
+                continue
+
+            eff_formats = config.formats
+
+            if not eff_formats:
+                for entry in dl_struct:
+                    items.append(_make_item(entry, bundle_title, item_title, config))
+                continue
+
+            matched: list[DownloadItem] = []
+            for pref in eff_formats:
+                for entry in reversed(dl_struct):
+                    if entry.get("name", "").lower() == pref.lower():
+                        matched.append(_make_item(entry, bundle_title, item_title, config))
+                        if config.pref_first:
+                            break
+                if matched and config.pref_first:
+                    break
+
+            if matched:
+                items.extend(matched)
+            elif not config.strict:
+                items.append(_make_item(dl_struct[-1], bundle_title, item_title, config))
+
+    return items
 
 
 def _make_item(
