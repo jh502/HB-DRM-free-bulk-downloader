@@ -94,7 +94,7 @@ def parse_directive(line: str, config: Config) -> None:
             config.formats = [f.strip() for f in val.split(",")]
 
     elif line.startswith("@"):
-        body = line[1:]
+        body = line[1:].strip()
         if body.lower() == "all":
             config.all_platforms = True
         elif body.lower() == "all-":

@@ -1,5 +1,5 @@
 from pathlib import Path
-from hb_downloader.config import Config, load_toml, parse_directive, iter_links_file
+from hb_downloader.config import Config, load_toml, parse_directive, iter_links_file, count_bundle_urls
 
 
 def test_config_defaults():
@@ -281,5 +281,4 @@ def test_iter_links_file_counts_only_bundle_urls(tmp_path):
         "https://www.humblebundle.com/downloads?key=BBB\n"
     )
     c = Config()
-    from hb_downloader.config import count_bundle_urls
     assert count_bundle_urls(links) == 2
