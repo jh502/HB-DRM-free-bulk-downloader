@@ -70,7 +70,7 @@ def test_fetch_bundle_500_raises_api_error():
             fetch_bundle("ERRKEY", "cookie")
 
 
-from hb_downloader.api import extract_downloads
+from hb_downloader.api import extract_downloads, _shorten_filename
 from hb_downloader.config import Config
 
 
@@ -168,3 +168,13 @@ def test_extract_filename_shortened(mock_bundle):
     )
     items = extract_downloads(mock_bundle, c)
     assert len(items[0].filename) <= 10
+
+
+def test_shorten_filename_extension_longer_than_target(base_config):
+    """When shorten_filename_to < extension length, stem becomes empty string (clamped at 0)."""
+    base_config.shorten_if_title_over = 1
+    base_config.shorten_filename_to = 3
+    # .epub is 5 chars, target is 3, so stem should be empty
+    result = _shorten_filename("very_long_title.epub", "very long title", base_config)
+    assert len(result) <= 5  # extension only at most
+    assert result.endswith(".epub")

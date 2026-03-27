@@ -1,5 +1,6 @@
 import pytest
 from pathlib import Path
+from hb_downloader.config import Config
 
 
 MOCK_BUNDLE_JSON = {
@@ -64,6 +65,11 @@ def tmp_download_dir(tmp_path):
     d = tmp_path / "downloads"
     d.mkdir()
     return d
+
+
+@pytest.fixture
+def base_config():
+    return Config()
 
 
 @pytest.fixture

@@ -36,7 +36,8 @@ def test_parse_args_all_options():
     assert args.dry_run is True
 
 
-def test_main_creates_downloads_dir(tmp_path, requests_mock):
+@patch("hb_downloader.cli.wait_for_connection", return_value=True)
+def test_main_creates_downloads_dir(mock_conn, tmp_path, requests_mock):
     links = tmp_path / "links.txt"
     links.write_text(
         "^test_cookie\n"
@@ -61,7 +62,8 @@ def test_main_creates_downloads_dir(tmp_path, requests_mock):
     assert (tmp_path / "downloads").exists()
 
 
-def test_main_dry_run(tmp_path, requests_mock):
+@patch("hb_downloader.cli.wait_for_connection", return_value=True)
+def test_main_dry_run(mock_conn, tmp_path, requests_mock):
     """--dry-run flag is passed through to download_bundle."""
     links = tmp_path / "links.txt"
     links.write_text(
@@ -89,7 +91,8 @@ def test_main_dry_run(tmp_path, requests_mock):
     assert (tmp_path / "downloads").exists()
 
 
-def test_main_auth_error(tmp_path, requests_mock):
+@patch("hb_downloader.cli.wait_for_connection", return_value=True)
+def test_main_auth_error(mock_conn, tmp_path, requests_mock):
     """HBAuthError from fetch_bundle is caught and execution continues."""
     links = tmp_path / "links.txt"
     links.write_text(
@@ -111,7 +114,8 @@ def test_main_auth_error(tmp_path, requests_mock):
     assert (tmp_path / "downloads").exists()
 
 
-def test_main_cookie_override(tmp_path, requests_mock):
+@patch("hb_downloader.cli.wait_for_connection", return_value=True)
+def test_main_cookie_override(mock_conn, tmp_path, requests_mock):
     """--cookie CLI arg overrides config cookie."""
     links = tmp_path / "links.txt"
     links.write_text(
@@ -137,7 +141,8 @@ def test_main_cookie_override(tmp_path, requests_mock):
     assert (tmp_path / "downloads").exists()
 
 
-def test_main_creates_links_txt(tmp_path, requests_mock):
+@patch("hb_downloader.cli.wait_for_connection", return_value=True)
+def test_main_creates_links_txt(mock_conn, tmp_path, requests_mock):
     """links.txt is created with template content when it doesn't exist."""
     links = tmp_path / "links.txt"
     assert not links.exists()

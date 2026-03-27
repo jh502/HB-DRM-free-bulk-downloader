@@ -170,7 +170,7 @@ def _shorten_filename(filename: str, item_title: str, config: Config) -> str:
         if ext_idx > 0:
             ext = filename[ext_idx:]
             stem = filename[:ext_idx]
-            max_stem = config.shorten_filename_to - len(ext)
+            max_stem = max(0, config.shorten_filename_to - len(ext))
             if len(filename) > config.shorten_filename_to:
                 filename = stem[:max_stem] + ext
     return filename
