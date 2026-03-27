@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hb-drm-free-downloader"
+version = "0.5.0"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+pretty = ["rich>=13"]
+dev = ["pytest>=7", "pytest-mock>=3", "requests-mock>=1.11"]
+
+[project.scripts]
+hb-dl = "hb_downloader.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
