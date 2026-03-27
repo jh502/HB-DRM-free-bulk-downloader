@@ -60,8 +60,11 @@ def main() -> None:
     # Ensure links.txt exists
     if not args.links.exists():
         args.links.write_text(
-            "^<Override this with your '_simpleauth_sess' cookie from your browser. "
-            "More info in README.>\n"
+            "# HB DRM-Free Downloader — links.txt\n"
+            "# Replace the value on the next line with your _simpleauth_sess cookie:\n"
+            "^paste_your_simpleauth_sess_cookie_here\n"
+            "# Then add your Humble Bundle download URLs below, one per line:\n"
+            "# https://www.humblebundle.com/downloads?key=YOUR_KEY_HERE\n"
         )
 
     # Set up log files (respects config.timestamped / config.utc)
